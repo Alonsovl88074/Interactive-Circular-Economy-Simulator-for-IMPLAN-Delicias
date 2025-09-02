@@ -1,0 +1,2 @@
+# Interactive-Circular-Economy-Simulator-for-IMPLAN-Delicias
+This tool leverages a combination of AI, vector databases, and a responsive web interface to empower local businesses with actionable insights for sustainable development. It demonstrates a robust application of Fullstack development principles, integrating a dynamic frontend with a powerful AI-driven backend and efficient data indexing.
