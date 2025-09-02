@@ -26,16 +26,20 @@ This project demonstrates a wide range of skills across the Fullstack developmen
 *   **UI/UX Design:** Focus on creating an intuitive and accessible interface for business users to easily input information and interpret AI-generated proposals.
 *   **DOM Manipulation & Content Post-Processing:** Developed a custom JavaScript function to transform raw AI text output into beautifully formatted HTML, ensuring readability and consistency, including custom bullet points and indentation.
 
-**Code Snippet: Frontend JavaScript for AI Output Formatting**
+<details>
+<summary><strong>Code Snippet: Frontend JavaScript for AI Output Formatting (`simulador-ia-econodel.html`)</strong></summary>
 
+````javascript
 // Function to format the AI's plain text output for better display in HTML
 function formatAiOutput(text) {
     const lines = text.split('\n').filter(line => line.trim() !== ''); // Filter out truly empty lines
     let finalHtml = '';
     let ulStack = []; // To manage nested <ul> elements
+
     lines.forEach(line => {
         const lineIndent = line.search(/\S|$/); // Get actual indentation
         const trimmedLine = line.trim();
+
         // Main Title
         if (trimmedLine.startsWith('Propuesta de Economía Circular para ')) {
             finalHtml += `<h2>${trimmedLine}</h2>`;
@@ -60,12 +64,15 @@ function formatAiOutput(text) {
             let displayContent = liContent;
             const activityMatch = liContent.match(/^(Actividad \d+:)\s*(.*)/);
             if (activityMatch) {
-                displayContent = `<strong>${activityMatch}</strong> ${activityMatch}`;
+                displayContent = `<strong>${activityMatch}</strong> ${activityMatch}`; // Changed to match[1] and match[2]
             }
+
             let targetLevel = (lineIndent - trimmedLine.indexOf('-')) / 2;
             if (targetLevel < 0) targetLevel = 0; 
+
             while (ulStack.length > targetLevel) { finalHtml += '</li></ul>'; ulStack.pop(); }
             while (ulStack.length < targetLevel) { finalHtml += '<ul>'; ulStack.push('</li>'); }
+            
             finalHtml += `<li>${displayContent}`;
             if (ulStack.length === targetLevel) { ulStack[ulStack.length - 1] = '</li>'; }
             return;
@@ -74,9 +81,11 @@ function formatAiOutput(text) {
         while (ulStack.length > 0) { finalHtml += '</li></ul>'; ulStack.pop(); }
         finalHtml += `<p>${trimmedLine}</p>`;
     });
+
     while (ulStack.length > 0) { finalHtml += '</li></ul>'; ulStack.pop(); }
     return finalHtml;
 }
+</details>
 
 Backend Development
 Python & Flask: Developed a lightweight RESTful API using Flask to handle incoming requests from the frontend, process data, and interact with the AI model and vector database.
